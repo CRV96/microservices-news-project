@@ -1,0 +1,6 @@
+.idea
+eureka-server/target
+cloud-config/target
+news-service/target
+user-service/target
+website/target
