@@ -7,7 +7,6 @@ spring:
         git:
           uri: file:///Users/robert/Developer/microservices-news-project/config
           clone-on-start: true
-
 server:
   port: 8888
 
