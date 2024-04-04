@@ -1,0 +1,79 @@
+version: '3.8'
+services:
+
+  mongo:
+    image: mongo
+    container_name: mongodb
+    networks:
+      - news
+    ports:
+      - "27017:27017"
+    volumes:
+      - data:/data
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: root
+
+  mongo-express:
+    image: mongo-express
+    container_name: mongo-express
+    restart: always
+    networks:
+      - news
+    ports:
+      - "8081:8081"  # Map port 8081 of the host to port 8081 of the container
+    environment:
+      ME_CONFIG_MONGODB_ADMINUSERNAME: root
+      ME_CONFIG_MONGODB_ADMINPASSWORD: root
+      ME_CONFIG_MONGODB_SERVER: mongodb
+
+  postgres:
+    container_name: postgres
+    image: postgres
+    environment:
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: password
+      PGDATA: /data/postgres
+    volumes:
+      - postgres:/data/postgres
+    ports:
+      - "5432:5432"
+    networks:
+      - user
+    restart: unless-stopped
+
+  pgadmin4:
+    image: elestio/pgadmin
+    container_name: pgadmin
+    restart: always
+    networks:
+      - user
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@email.com
+      PGADMIN_DEFAULT_PASSWORD: password
+      PGADMIN_LISTEN_PORT: 8082
+    ports:
+      - "8088:8082"
+    volumes:
+      - postgres:/data/pgadmin4
+
+  zipkin:
+    image: openzipkin/zipkin
+    container_name: zipkin
+    ports:
+      - "9411:9411"
+    networks:
+      - default
+
+volumes:
+  data:
+    name: mongo
+  postgres:
+    name: postgres
+
+networks:
+  news:
+    driver: bridge
+  user:
+    driver: bridge
+  default:
