@@ -1,10 +1,38 @@
 <!DOCTYPE html>
-<html lang="en"
-      xmlns:th="http://www.thymeleaf.org"
-      th:replace="~{layout :: layout (~{::section})}">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="~{layout :: layout (~{::section})}">
 <body>
-    <section>
-        <p>TEST</p>
-    </section>
+<section>
+    <div class="container">
+        <h2 th:text="${bannerTitle}"></h2>
+        <div class="row mt-3 mb-3 h-50">
+            <div class="col-12 col-md-6 col-lg-3 h-100 fixed" th:each="article : ${articles}">
+                <div class="card mb-4 h-40">
+                    <div th:if="${article.media != null and article.media.size() > 0 and article.media[0].mediaMetadata != null}">
+                            <img class="card-img-top h-20" th:if="${article.media[0].mediaMetadata[2].url != null}" th:src="${article.media[0].mediaMetadata[2].url}">
+                            <img class="card-img-top h-30" th:if="${article.media[0].mediaMetadata[2].url == null and article.media[0].mediaMetadata[1].url != null}" th:src="${article.media[0].mediaMetadata[1].url}">
+                            <img class="card-img-top h-30"
+                                 th:if="${article.media[0].mediaMetadata[2].url == null and article.media[0].mediaMetadata[1].url == null and article.media[0].mediaMetadata[0].url != null}"
+                                 th:src="${article.media[0].mediaMetadata[0].url}">
+                            <img class="card-img-top h-30"
+                                 th:if="${article.media[0].mediaMetadata[2].url == null and article.media[0].mediaMetadata[1].url == null and article.media[0].mediaMetadata[0].url == null}"
+                                 th:src="noImage.png" alt="Card image cap">
+                    </div>
+                    <div th:if="${article.media == null}">
+                        <img class="card-img-top h-30" th:src="noImage.png" >
+                    </div>
+
+                    <div class="card-body h-80">
+                        <h5 class="card-title h-50 text-overflow" th:text="${article.title}"></h5>
+                        <p class="card-text h-40 text-overflow" th:text="${article.abstractTitle}"></p>
+                        <p th:text="${article.byline}"></p>
+                        <p><i  th:text="${article.updated}"></i></p>
+                        <a th:href="${article.url}" class="btn btn-primary h-10" th:text="#{articles.btn.read.the.article}"></a>
+                        <a href="#" class="btn btn-secondary h-10" th:text="#{articles.btn.save.the.article}"></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
 </body>
 </html>
