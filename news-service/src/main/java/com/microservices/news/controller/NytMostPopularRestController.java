@@ -1,8 +1,9 @@
 package com.microservices.news.controller;
 
 import com.microservices.news.config.constants.NewsConstants.NYTConstants;
-import com.microservices.news.dto.NYTData;
-import com.microservices.news.service.NewYorkTimesService;
+import com.microservices.news.dto.nyt.mostPopular.enums.NytMostPopularTypes;
+import com.microservices.news.dto.nyt.mostPopular.data.NytMostPopularData;
+import com.microservices.news.service.NytService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,20 +18,20 @@ import java.util.List;
 public class NytMostPopularRestController {
 
     @Autowired
-    private NewYorkTimesService newYorkTimesService;
+    private NytService newYorkTimesService;
 
     @GetMapping(NYTConstants.URL_NYT_GET_MOST_RECENT_EMAIL)
-    public List<NYTData> getMostRecentArticlesFromEmail(){
-        return newYorkTimesService.getMostRecentEmailedArticles();
+    public List<NytMostPopularData> getMostRecentArticlesFromEmail(){
+        return newYorkTimesService.getNytMostPopularCollectionFromDatabase(NytMostPopularTypes.NYT_MOST_POPULAR_EMAILED);
     }
 
     @GetMapping(NYTConstants.URL_NYT_GET_MOST_RECENT_FACEBOOK)
-    public List<NYTData> getMostRecentArticlesFromFacebook(){
-        return newYorkTimesService.getMostRecentFacebookArticles();
+    public List<NytMostPopularData> getMostRecentArticlesFromFacebook(){
+        return newYorkTimesService.getNytMostPopularCollectionFromDatabase(NytMostPopularTypes.NYT_MOST_POPULAR_FACEBOOK);
     }
 
     @GetMapping(NYTConstants.URL_NYT_GET_MOST_RECENT_VIEWED)
-    public List<NYTData> getMostRecentArticlesFromViewed(){
-        return newYorkTimesService.getMostRecentViewedArticles();
+    public List<NytMostPopularData> getMostRecentArticlesFromViewed(){
+        return newYorkTimesService.getNytMostPopularCollectionFromDatabase(NytMostPopularTypes.NYT_MOST_POPULAR_VIEWED);
     }
 }

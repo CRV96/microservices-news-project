@@ -1,4 +1,4 @@
-package com.microservices.news.dto;
+package com.microservices.news.dto.nyt.mostPopular.data;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
@@ -6,7 +6,7 @@ import lombok.Data;
 import java.util.List;
 
 @Data
-public class NYTMedia {
+public class NytMostPopularMedia {
 
     private String type;
     private String subtype;
@@ -14,5 +14,5 @@ public class NYTMedia {
     private String copyright;
 
     @JsonProperty("media-metadata")
-    private List<NYTMediaMetadata> mediaMetadata;
+    private List<NytMostPopularMediaMetadata> mediaMetadata;
 }

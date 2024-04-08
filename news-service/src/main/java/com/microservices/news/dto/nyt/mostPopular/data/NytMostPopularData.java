@@ -1,15 +1,18 @@
-package com.microservices.news.dto;
+package com.microservices.news.dto.nyt.mostPopular.data;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
+import org.springframework.data.annotation.Id;
 
 import java.util.List;
 
 @Data
-public class NYTData {
+public class NytMostPopularData {
+    @Id
+    private Long id;
+
     private String uri;
     private String url;
-    private Long id;
     private Long asset_id;
     private String source;
     private String published_date;
@@ -23,6 +26,6 @@ public class NYTData {
     @JsonProperty("abstract")
     private String abstractTitle;
     @JsonProperty("media")
-    private List<NYTMedia> media;
+    private List<NytMostPopularMedia> media;
 
 }
