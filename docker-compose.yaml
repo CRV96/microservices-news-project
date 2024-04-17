@@ -42,6 +42,28 @@ services:
       - user
     restart: unless-stopped
 
+  keycloak:
+    container_name: keycloak
+    image: docker.io/bitnami/keycloak:latest
+    ports:
+      - "8090:8080"
+    environment:
+      - KEYCLOAK_CREATE_ADMIN_USER=true
+      - KEYCLOAK_DATABASE_VENDOR=PostgreSQL
+      - KEYCLOAK_DATABASE_HOST=postgres
+      - KEYCLOAK_DATABASE_PORT=5432
+      - KEYCLOAK_DATABASE_USER=root
+      - KEYCLOAK_DATABASE_PASSWORD=password
+      - KEYCLOAK_DATABASE_NAME=news-user-service
+      - KEYCLOAK_ADMIN=root
+      - KEYCLOAK_ADMIN_PASSWORD=password
+    depends_on:
+      - postgres
+    networks:
+      - user
+    volumes:
+      - './mynewtheme:/opt/bitnami/keycloak/themes/mynewtheme'
+
   pgadmin4:
     image: elestio/pgadmin
     container_name: pgadmin
